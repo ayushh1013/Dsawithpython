@@ -1,0 +1,33 @@
+class Solution:
+    def smallestPalindrome(self, s: str) -> str:
+        n = len(s)
+        
+        freq = [0]*26
+        for ch in s:
+            #freq[ch] += 1
+            freq[ord(ch) - ord('a')] += 1
+        
+        ans = ['']*n
+
+        left = 0
+        right = n-1
+        k = 0
+
+        #Place character pairs
+        for k in range(26):            
+            while freq[k] > 1:
+                ch = chr(k + ord('a'))
+                ans[left] = ch
+                ans[right] = ch
+
+                freq[k] -= 2
+                left += 1
+                right -= 1
+
+        #Place the middle character if any
+        for k in range(26):
+            if freq[k] == 1:                
+                ans[left] = chr(k + ord('a'))
+                break
+        
+        return "".join(ans)
